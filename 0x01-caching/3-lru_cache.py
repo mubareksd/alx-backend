@@ -24,7 +24,6 @@ class LRUCache(BasicCaching):
             if key not in self.cache_data:
                 self.call.append(key)
             if len(self.call) > BasicCaching.MAX_ITEMS:
-                print(self.call)
                 rm_key = self.call.pop(0)
                 print("DISCARD: {}".format(rm_key))
                 del self.cache_data[rm_key]
