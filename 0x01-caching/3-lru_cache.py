@@ -11,6 +11,7 @@ class LRUCache(BasicCaching):
         """__init__ function
         """
         super().__init__()
+        self.call = []
 
     def put(self, key, item):
         """put function
@@ -20,10 +21,14 @@ class LRUCache(BasicCaching):
             item ([type]): [description]
         """
         if key and item:
+            if key not in self.cache_data:
+                self.call.append(key)
+            if len(self.call) > BasicCaching.MAX_ITEMS:
+                print(self.call)
+                rm_key = self.call.pop(0)
+                print("DISCARD: {}".format(rm_key))
+                del self.cache_data[rm_key]
             self.cache_data[key] = item
-            if len(self.cache_data) > BasicCaching.MAX_ITEMS:
-                print("DISCARD: {}".format(list(self.cache_data.keys())[0]))
-                del self.cache_data[list(self.cache_data.keys())[0]]
 
     def get(self, key):
         """get function
@@ -34,5 +39,8 @@ class LRUCache(BasicCaching):
         Returns:
             [type]: [description]
         """
-        return self.cache_data.get(
-                key, None) if key in self.cache_data else None
+        if key in self.cache_data:
+            self.call.remove(key)
+            self.call.append(key)
+            return self.cache_data[key]
+        return None
