@@ -23,7 +23,7 @@ class LRUCache(BasicCaching):
             self.cache_data[key] = item
             if len(self.cache_data) > BasicCaching.MAX_ITEMS:
                 print("DISCARD: {}".format(list(self.cache_data.keys())[0]))
-                self.cache_data.pop(list(self.cache_data.keys())[0])
+                del self.cache_data[list(self.cache_data.keys())[0]]
 
     def get(self, key):
         """get function
