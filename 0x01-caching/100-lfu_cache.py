@@ -23,6 +23,8 @@ class LFUCache(BasicCaching):
         if key and item:
             if key not in self.call.keys():
                 self.call[key] = 0
+            else:
+                self.call[key] += 1
             if len(self.cache_data) > self.MAX_ITEMS:
                 min_key = min(self.call, key=self.call.get)
                 print('DISCARD: {}'.format(min_key))
