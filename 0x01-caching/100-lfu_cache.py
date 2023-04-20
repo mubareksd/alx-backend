@@ -24,10 +24,10 @@ class LFUCache(BasicCaching):
             if key not in self.call.keys():
                 self.call[key] = 0
             if len(self.cache_data) > self.MAX_ITEMS:
-                ssr = sorted(self.call.items(), key=lambda x: x[1])
-                print('DISCARD: {}'.format(ssr[0][0]))
-                del self.cache_data[ssr[0][0]]
-                del self.call[ssr[0][0]]
+                min_key = min(self.call, key=self.call.get)
+                print('DISCARD: {}'.format(min_key))
+                del self.cache_data[min_key]
+                del self.call[min_key]
 
             self.cache_data[key] = item
 
@@ -38,8 +38,6 @@ class LFUCache(BasicCaching):
             key ([type]): [description]
         """
         if key in self.cache_data:
-            if key not in self.call.keys():
-                self.call[key] = 0
             self.call[key] += 1
             return self.cache_data[key]
         return None
