@@ -30,6 +30,11 @@ babel = Babel(app)
 def get_locale():
     """get_locale function
     """
+    if request.args.get("locale") in app.config['LANGUAGES']:
+        return request.args.get("locale")
+    if g.user:
+        if g.user.get("locale") in app.config['LANGUAGES']:
+            return g.user.get("locale")
     if request.headers.get("locale") in app.config['LANGUAGES']:
         return request.headers.get("locale")
     return request.accept_languages.best_match(app.config['LANGUAGES'])
@@ -57,7 +62,7 @@ babel.init_app(app, locale_selector=get_locale)
 def home():
     """index function
     """
-    return render_template("6-index.html")
+    return render_template("5-index.html")
 
 
 if __name__ == "__main__":
