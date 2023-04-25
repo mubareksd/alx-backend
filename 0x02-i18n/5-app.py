@@ -20,7 +20,6 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
 app.url_map.strict_slashes = False
@@ -55,9 +54,6 @@ def before_request():
     """before_request function
     """
     g.user = get_user()
-
-
-babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route("/", methods=["GET"])
