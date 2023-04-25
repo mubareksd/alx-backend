@@ -27,8 +27,12 @@ app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
+@babel.localeselector
 def get_locale():
     """get_locale function
+
+    Returns:
+        str - locale
     """
     if request.args.get("locale") in app.config['LANGUAGES']:
         return request.args.get("locale")
@@ -42,6 +46,9 @@ def get_locale():
 
 def get_user():
     """get_user function
+
+    Returns:
+        dict - user
     """
     if request.args.get("login_as"):
         return users.get(int(request.args.get("login_as")))
@@ -53,9 +60,6 @@ def before_request():
     """before_request function
     """
     g.user = get_user()
-
-
-babel.init_app(app, locale_selector=get_locale)
 
 
 @app.route("/", methods=["GET"])
