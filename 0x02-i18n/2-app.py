@@ -15,6 +15,7 @@ class Config(object):
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
@@ -27,7 +28,7 @@ def get_locale():
 babel.init_app(app, locale_selector=get_locale)
 
 
-@app.route("/", methods=["GET"], strict_slashes=False)
+@app.route("/", methods=["GET"])
 def home():
     """index function
     """
